@@ -180,7 +180,8 @@ class MultiSelectDialogField<V> extends FormField<List<V>> {
                 checkColor: checkColor,
                 controller: controller,
               );
-              return _MultiSelectDialogFieldView<V>._withState(field, state);
+              return _MultiSelectDialogFieldView<V>._withState(
+                  field as _MultiSelectDialogFieldView<V>, state);
             });
 }
 
