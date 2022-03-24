@@ -263,6 +263,9 @@ class _MultiSelectDialogState<T> extends State<MultiSelectDialog<T>> {
                                 onChanged: (value) {
                                   setState(() {
                                     _isSelectedAll = value;
+                                    for (int i = 0; i < _items.length; i++) {
+                                      _items[i].selected = true;
+                                    }
                                   });
                                 }),
                             widget.title ?? Text("Select")
