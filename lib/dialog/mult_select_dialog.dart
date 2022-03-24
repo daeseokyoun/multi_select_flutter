@@ -112,6 +112,7 @@ class MultiSelectDialog<T> extends StatefulWidget with MultiSelectActions<T> {
 class _MultiSelectDialogState<T> extends State<MultiSelectDialog<T>> {
   List<T> _selectedValues = [];
   bool _showSearch = false;
+  bool _isSelectedAll = false;
   List<MultiSelectItem<T>> _items;
 
   _MultiSelectDialogState(this._items);
@@ -254,7 +255,18 @@ class _MultiSelectDialogState<T> extends State<MultiSelectDialog<T>> {
                           ),
                         ),
                       )
-                    : widget.title ?? Text("Select"),
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                            Switch(
+                                value: _isSelectedAll,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _isSelectedAll = value;
+                                  });
+                                }),
+                            widget.title ?? Text("Select")
+                          ]),
                 IconButton(
                   icon: _showSearch
                       ? widget.closeSearchIcon ?? Icon(Icons.close)
