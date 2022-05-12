@@ -225,6 +225,7 @@ class _MultiSelectDialogState<T> extends State<MultiSelectDialog<T>> {
               children: <Widget>[
                 _showSearch
                     ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Switch(
                               value: _isSelectedAll,
@@ -244,6 +245,8 @@ class _MultiSelectDialogState<T> extends State<MultiSelectDialog<T>> {
                               }),
                           Container(
                             padding: EdgeInsets.only(left: 10),
+                            width: widget.width ??
+                                MediaQuery.of(context).size.width * 0.73,
                             child: TextField(
                               style: widget.searchTextStyle,
                               decoration: InputDecoration(
