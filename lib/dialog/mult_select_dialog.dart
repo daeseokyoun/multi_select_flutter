@@ -242,35 +242,33 @@ class _MultiSelectDialogState<T> extends State<MultiSelectDialog<T>> {
                                   }
                                 });
                               }),
-                          Expanded(
-                            child: Container(
-                              padding: EdgeInsets.only(left: 10),
-                              child: TextField(
-                                style: widget.searchTextStyle,
-                                decoration: InputDecoration(
-                                  hintStyle: widget.searchHintStyle,
-                                  hintText: widget.searchHint ?? "Search",
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: widget.selectedColor ??
-                                          Theme.of(context).primaryColor,
-                                    ),
+                          Container(
+                            padding: EdgeInsets.only(left: 10),
+                            child: TextField(
+                              style: widget.searchTextStyle,
+                              decoration: InputDecoration(
+                                hintStyle: widget.searchHintStyle,
+                                hintText: widget.searchHint ?? "Search",
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: widget.selectedColor ??
+                                        Theme.of(context).primaryColor,
                                   ),
                                 ),
-                                onChanged: (val) {
-                                  List<MultiSelectItem<T>> filteredList = [];
-                                  filteredList = widget.updateSearchQuery(
-                                      val, widget.items);
-                                  setState(() {
-                                    if (widget.separateSelectedItems) {
-                                      _items =
-                                          widget.separateSelected(filteredList);
-                                    } else {
-                                      _items = filteredList;
-                                    }
-                                  });
-                                },
                               ),
+                              onChanged: (val) {
+                                List<MultiSelectItem<T>> filteredList = [];
+                                filteredList =
+                                    widget.updateSearchQuery(val, widget.items);
+                                setState(() {
+                                  if (widget.separateSelectedItems) {
+                                    _items =
+                                        widget.separateSelected(filteredList);
+                                  } else {
+                                    _items = filteredList;
+                                  }
+                                });
+                              },
                             ),
                           ),
                         ],
