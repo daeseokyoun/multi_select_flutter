@@ -224,36 +224,56 @@ class _MultiSelectDialogState<T> extends State<MultiSelectDialog<T>> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 _showSearch
-                    ? Expanded(
-                        child: Container(
-                          padding: EdgeInsets.only(left: 10),
-                          child: TextField(
-                            style: widget.searchTextStyle,
-                            decoration: InputDecoration(
-                              hintStyle: widget.searchHintStyle,
-                              hintText: widget.searchHint ?? "Search",
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: widget.selectedColor ??
-                                      Theme.of(context).primaryColor,
+                    ? Row(
+                        children: [
+                          Switch(
+                              value: _isSelectedAll,
+                              onChanged: (value) {
+                                setState(() {
+                                  _isSelectedAll = value;
+                                  for (int i = 0; i < _items.length; i++) {
+                                    _items[i].selected = _isSelectedAll;
+
+                                    _selectedValues =
+                                        widget.onItemCheckedChange(
+                                            _selectedValues,
+                                            _items[i].value,
+                                            _isSelectedAll);
+                                  }
+                                });
+                              }),
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.only(left: 10),
+                              child: TextField(
+                                style: widget.searchTextStyle,
+                                decoration: InputDecoration(
+                                  hintStyle: widget.searchHintStyle,
+                                  hintText: widget.searchHint ?? "Search",
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: widget.selectedColor ??
+                                          Theme.of(context).primaryColor,
+                                    ),
+                                  ),
                                 ),
+                                onChanged: (val) {
+                                  List<MultiSelectItem<T>> filteredList = [];
+                                  filteredList = widget.updateSearchQuery(
+                                      val, widget.items);
+                                  setState(() {
+                                    if (widget.separateSelectedItems) {
+                                      _items =
+                                          widget.separateSelected(filteredList);
+                                    } else {
+                                      _items = filteredList;
+                                    }
+                                  });
+                                },
                               ),
                             ),
-                            onChanged: (val) {
-                              List<MultiSelectItem<T>> filteredList = [];
-                              filteredList =
-                                  widget.updateSearchQuery(val, widget.items);
-                              setState(() {
-                                if (widget.separateSelectedItems) {
-                                  _items =
-                                      widget.separateSelected(filteredList);
-                                } else {
-                                  _items = filteredList;
-                                }
-                              });
-                            },
                           ),
-                        ),
+                        ],
                       )
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
